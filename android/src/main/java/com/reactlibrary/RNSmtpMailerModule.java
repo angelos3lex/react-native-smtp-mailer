@@ -7,6 +7,10 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 
+import java.util.HashMap;
+import java.util.Map;
+import android.widget.Toast;
+
 public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
   
   private final ReactApplicationContext reactContext;
@@ -35,11 +39,11 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void show(String text, int duration, final Promise promise){
     try{
-     Toast.makeText(ReactApplicationContext, text, duration).show()
-     promise.resolve(true)
+     Toast.makeText(getReactApplicationContext(), text, duration).show();
+     promise.resolve(true);
     }
     catch(Exception e){
-      promise.reject("ERR_UNEXPECTED_EXCEPTION",e)
+      promise.reject("ERR_UNEXPECTED_EXCEPTION",e);
     }
   }
 }

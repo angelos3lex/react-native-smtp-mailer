@@ -9,5 +9,16 @@
 5)/*ANDROID*/
 RNLibraryNameModule.java will be where i implement code which is accessible to RN.
 @ReactMethod on top of a function marks this function as accessible by RN
+*Where a native method needs context, i use getReactApplicationContext().
+*If i want to use promise, i import react.bridge.promise as a parameter, and then i can call .then/.catch from RN
 
+
+6)/*iOS*/
+
+To test a React Native bridge library, -> write a test application,with below commands inside my library's folder
+ > npm link //register my library to npm locally
+ > react-native init example
+ > cd example
+ > npm link react-native-secure-keystore //link local library with my example project
+ > react-native link react-native-secure-keystore
 /*also update package.json with author-license-repo etc*/
