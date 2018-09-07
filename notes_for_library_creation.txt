@@ -1,0 +1,3 @@
+1) Globally installed react-native-create-library module
+2) > react-native-create-library --platforms android,ios library-name //library name should be without react-native because RN is automatically added afterwards to package and is bad
+3) > mv library-name react-native-library-name //then rename library as i wish 
