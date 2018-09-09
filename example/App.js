@@ -12,13 +12,6 @@ import RNSmtpMailer from "react-native-smtp-mailer";
 import RNFS from "react-native-fs";
 
 export default class App extends Component {
-  toastShow = () => {
-    RNSmtpMailer.show("dummy message", RNSmtpMailer.SHORT)
-      .then(val => {
-        console.log(val);
-      })
-      .catch(err => console.log(err));
-  };
   sendEmail = () => {
     RNSmtpMailer.sendMail({
       mailhost: "smtp.gmail.com",

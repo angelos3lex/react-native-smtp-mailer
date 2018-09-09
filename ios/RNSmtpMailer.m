@@ -7,7 +7,14 @@
 {
     return dispatch_get_main_queue();
 }
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE(sendEmail:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if (true) {
+        resolve(@(YES));
+    } else {
+        resolve(@(NO));
+    }
+}
 
 @end
   
