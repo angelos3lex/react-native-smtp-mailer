@@ -16,7 +16,7 @@ export default class App extends Component {
     RNSmtpMailer.sendMail({
       mailhost: "smtp.gmail.com",
       port: "465",
-      ssl: true, //if ssl: false, TLS is enabled
+      ssl: false, //if ssl: false, TLS is enabled
       username: "usernameEmail",
       password: "password",
       from: "fromEmail",
@@ -31,8 +31,8 @@ export default class App extends Component {
       attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],
       attachmentTypes: ["img", "txt", "csv"]
     })
-      .then(success => console.log(success))
-      .catch(err => console.log(err));
+      .then(success => alert(success))
+      .catch(err => alert(err));
   };
 
   render() {
