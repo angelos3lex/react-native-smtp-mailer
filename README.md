@@ -1,4 +1,3 @@
-
 # react-native-smtp-mailer
 
 ## Getting started
@@ -11,7 +10,6 @@
 
 ### Manual installation
 
-
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
@@ -22,51 +20,55 @@
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNSmtpMailerPackage;` to the imports at the top of the file
-  - Add `new RNSmtpMailerPackage()` to the list returned by the `getPackages()` method
+
+- Add `import com.reactlibrary.RNSmtpMailerPackage;` to the imports at the top of the file
+- Add `new RNSmtpMailerPackage()` to the list returned by the `getPackages()` method
+
 2. Append the following lines to `android/settings.gradle`:
-  	```
-  	include ':react-native-smtp-mailer'
-  	project(':react-native-smtp-mailer').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-smtp-mailer/android')
-  	```
+   ```
+   include ':react-native-smtp-mailer'
+   project(':react-native-smtp-mailer').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-smtp-mailer/android')
+   ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-  	```
-      compile project(':react-native-smtp-mailer')
-  	```
+   ```
+     compile project(':react-native-smtp-mailer')
+   ```
 
 Either choosing manual or automatic link, you need to add in <b><i>android/app/build.gradle:</i></b>
 
 ```
-packagingOptions {
-	exclude 'META-INF/mimetypes.default'
-	exclude 'META-INF/mailcap.default'
+android {
+	...
+	packagingOptions {
+		exclude 'META-INF/mimetypes.default'
+		exclude 'META-INF/mailcap.default'
+	}
 }
 ```
 
 ## Usage
-```javascript
-import RNSmtpMailer from 'react-native-smtp-mailer';
 
-// TODO: What to do with the module?
+```javascript
+import RNSmtpMailer from "react-native-smtp-mailer";
+
 RNSmtpMailer.sendMail({
-      mailhost: "smtp.gmail.com",
-      port: "465",
-      ssl: true, //if ssl: false, TLS is enabled
-      username: "usernameEmail",
-      password: "password",
-      from: "fromEmail",
-      recipients: "toEmail1,toEmail2",
-      subject: "subject",
-      htmlBody: "<h1>header</h1><p>body</p>",
-      attachmentPaths: [
-        RNFS.ExternalDirectoryPath + "/image.jpg",
-        RNFS.DocumentDirectoryPath + "/test.txt",
-        RNFS.DocumentDirectoryPath + "/test2.csv"
-      ],
-      attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],
-      attachmentTypes: ["img", "txt", "csv"]
-    })
-      .then(success => console.log(success))
-      .catch(err => console.log(err));
+  mailhost: "smtp.gmail.com",
+  port: "465",
+  ssl: true, //if ssl: false, TLS is enabled
+  username: "usernameEmail",
+  password: "password",
+  from: "fromEmail",
+  recipients: "toEmail1,toEmail2",
+  subject: "subject",
+  htmlBody: "<h1>header</h1><p>body</p>",
+  attachmentPaths: [
+    RNFS.ExternalDirectoryPath + "/image.jpg",
+    RNFS.DocumentDirectoryPath + "/test.txt",
+    RNFS.DocumentDirectoryPath + "/test2.csv"
+  ],
+  attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],
+  attachmentTypes: ["img", "txt", "csv"]
+})
+  .then(success => console.log(success))
+  .catch(err => console.log(err));
 ```
-  
