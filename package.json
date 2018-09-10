@@ -1,16 +1,20 @@
 {
   "name": "react-native-smtp-mailer",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Send emails by connecting to smtp server+attachments, currently android-only, ios to be implemented",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angelos3lex/react-native-smtp-mailer.git"
   },
+  "main": "index.js",
+  "homepage": "https://github.com/angelos3lex/react-native-smtp-mailer",
   "keywords": [
-    "react-native"
+    "react-native",
+    "smtp",
+    "email"
   ],
-  "author": "",
-  "license": "",
+  "author": "angelos3lex",
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
   }

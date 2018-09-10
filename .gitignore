@@ -44,3 +44,4 @@ buck-out/
 \.buckd/
 *.keystore
       
+notes_for_library_creation.txt
