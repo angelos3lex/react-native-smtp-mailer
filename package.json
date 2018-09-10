@@ -13,7 +13,7 @@
     "smtp",
     "email"
   ],
-  "author": "angelos3lex",
+  "author": "angeloslex",
   "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
