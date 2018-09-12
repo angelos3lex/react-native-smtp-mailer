@@ -34,7 +34,7 @@
      compile project(':react-native-smtp-mailer')
    ```
 
-Either choosing manual or automatic link, you need to add in <b><i>android/app/build.gradle:</i></b>
+Maybe you need to add,if you encounter error, in <b><i>android/app/build.gradle:</i></b>
 
 ```
 android {
@@ -44,6 +44,21 @@ android {
 		exclude 'META-INF/mailcap.default'
 	}
 }
+```
+
+create a Podfile and add:
+```
+pod 'mailcore2-ios'
+
+```
+and then run
+```
+ pod install
+```
+
+also, in RNSmtpMailer.xcodeproj, in build settings, in Header Search Paths, add:
+```
+$(SRCROOT)/../../../ios/Podsmailcore2-ios 
 ```
 
 ## Usage
