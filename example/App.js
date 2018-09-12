@@ -16,20 +16,16 @@ export default class App extends Component {
     RNSmtpMailer.sendMail({
       mailhost: "smtp.gmail.com",
       port: "465",
-      ssl: false, //if ssl: false, TLS is enabled
-      username: "usernameEmail",
+      ssl: false, //if ssl: false, TLS is enabled,**note:** in iOS TLS/SSL is determined automatically, so either true or false is the same
+      username: "username",
       password: "password",
       from: "fromEmail",
       recipients: "toEmail1,toEmail2",
       subject: "subject",
       htmlBody: "<h1>header</h1><p>body</p>",
-      attachmentPaths: [
-        RNFS.ExternalDirectoryPath + "/image.jpg",
-        RNFS.DocumentDirectoryPath + "/test.txt",
-        RNFS.DocumentDirectoryPath + "/test2.csv"
-      ],
-      attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],
-      attachmentTypes: ["img", "txt", "csv"]
+      attachmentPaths: ["pathToFile1.png","pathToFile2.txt","pathToFile3.csv"],
+      attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],//only used in android, these are renames of original files. in ios filenames will be same as specified in path,use as attachmentNames:[] in iOS 
+      attachmentTypes: ["img", "txt", "csv"]//needed for android, in ios leave it empty: attachmentTypes:[]
     })
       .then(success => alert(success))
       .catch(err => alert(err));

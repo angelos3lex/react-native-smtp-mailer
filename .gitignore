@@ -43,5 +43,6 @@ local.properties
 buck-out/
 \.buckd/
 *.keystore
-      
+
+example/ios/Pods/*      
 notes_for_library_creation.txt
