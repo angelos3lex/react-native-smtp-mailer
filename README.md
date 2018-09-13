@@ -46,9 +46,12 @@ android {
 }
 ```
 
-create a Podfile with `pod init` and add (or just add it on your existing Podfile):
+For iOS, inside ios folder, create a Podfile with `pod init` and add (or just add it on your existing Podfile):
 ```
 pod 'mailcore2-ios'
+```
+Then run:
+```
 pod install
 ```
 
