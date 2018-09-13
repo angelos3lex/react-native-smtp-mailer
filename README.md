@@ -31,10 +31,10 @@
    ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
    ```
-     compile project(':react-native-smtp-mailer')
+     implementation project(':react-native-smtp-mailer')
    ```
 
-Maybe you need to add,if you encounter error, in <b><i>android/app/build.gradle:</i></b>
+Maybe you need to add (if you encounter error with mimetypes during build), in <b><i>android/app/build.gradle:</i></b>
 
 ```
 android {
@@ -46,17 +46,13 @@ android {
 }
 ```
 
-create a Podfile and add:
+create a Podfile with `pod init` and add (or just add it on your existing Podfile):
 ```
 pod 'mailcore2-ios'
-
-```
-and then run
-```
- pod install
+pod install
 ```
 
-also, in RNSmtpMailer.xcodeproj, in build settings, in Header Search Paths, add:
+Then, in RNSmtpMailer.xcodeproj, in build settings, in Header Search Paths, add:
 ```
 $(SRCROOT)/../../../ios/Podsmailcore2-ios 
 ```
@@ -69,7 +65,7 @@ import RNSmtpMailer from "react-native-smtp-mailer";
 RNSmtpMailer.sendMail({
   mailhost: "smtp.gmail.com",
   port: "465",
-  ssl: true, //if ssl: false, TLS is enabled
+  ssl: true,//if ssl: false, TLS is enabled,**note:** in iOS TLS/SSL is determined automatically, so either true or false is the same
   username: "usernameEmail",
   password: "password",
   from: "fromEmail",
