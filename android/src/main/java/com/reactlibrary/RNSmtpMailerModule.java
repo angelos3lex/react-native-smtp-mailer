@@ -117,7 +117,6 @@ class MailSender extends javax.mail.Authenticator {
 
     public synchronized void sendMail(String subject, String body, String sender, String recipients,
     ReadableArray attachmentPaths, ReadableArray attachmentNames, ReadableArray attachmentTypes) throws Exception {   
-        try{
         MimeMessage message = new MimeMessage(session);
         Transport transport = session.getTransport();
         BodyPart messageBodyPart = new MimeBodyPart(); 
@@ -151,9 +150,6 @@ class MailSender extends javax.mail.Authenticator {
         
         transport.send(message);
         transport.close();
-        } catch(Exception e){
-            e.printStackTrace();
-        }
     }     
 }  
 
