@@ -76,12 +76,12 @@ RNSmtpMailer.sendMail({
   subject: "subject",
   htmlBody: "<h1>header</h1><p>body</p>",
   attachmentPaths: [
-    RNFS.ExternalDirectoryPath + "/image.jpg",
+    RNFS.ExternalDirectoryPath + "/image.jpg", //RNFS is from [react-native-fs](https://github.com/itinance/react-native-fs) library, used just to demonstrate a way of accessing files in phone filesystem.
     RNFS.DocumentDirectoryPath + "/test.txt",
     RNFS.DocumentDirectoryPath + "/test2.csv"
-  ],
-  attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],
-  attachmentTypes: ["img", "txt", "csv"]
+  ], 
+  attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"], //only used in android, these are renames of original files. in ios filenames will be same as specified in path. In ios-only application, leave it empty: attachmentNames:[] 
+  attachmentTypes: ["img", "txt", "csv"] //needed for android, in ios-only application, leave it empty: attachmentTypes:[]
 })
   .then(success => console.log(success))
   .catch(err => console.log(err));
