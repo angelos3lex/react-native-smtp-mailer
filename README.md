@@ -57,7 +57,7 @@ pod install
 
 Then, in RNSmtpMailer.xcodeproj, in build settings, in Header Search Paths, add:
 ```
-$(SRCROOT)/../../../ios/Podsmailcore2-ios 
+$(SRCROOT)/../../../ios/Pods/mailcore2-ios 
 ```
 
 ## Usage
