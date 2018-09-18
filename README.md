@@ -76,7 +76,7 @@ RNSmtpMailer.sendMail({
   subject: "subject",
   htmlBody: "<h1>header</h1><p>body</p>",
   attachmentPaths: [
-    RNFS.ExternalDirectoryPath + "/image.jpg", //RNFS is from [react-native-fs](https://github.com/itinance/react-native-fs) library, used just to demonstrate a way of accessing files in phone filesystem.
+    RNFS.ExternalDirectoryPath + "/image.jpg", //RNFS is from <a href="https://github.com/itinance/react-native-fs">react-native-fs</a> library, used here just to demonstrate a way of accessing files in phone filesystem.
     RNFS.DocumentDirectoryPath + "/test.txt",
     RNFS.DocumentDirectoryPath + "/test2.csv"
   ], 
