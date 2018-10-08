@@ -121,8 +121,9 @@ class MailSender extends javax.mail.Authenticator {
         Transport transport = session.getTransport();
         BodyPart messageBodyPart = new MimeBodyPart(); 
 
-        message.setSender(new InternetAddress(sender));   
+        message.setFrom(new InternetAddress(sender, ""));
         message.setSubject(subject); 
+        message.setSentDate(new Date());
 
         messageBodyPart.setContent( body, "text/html; charset=utf-8" );
 
