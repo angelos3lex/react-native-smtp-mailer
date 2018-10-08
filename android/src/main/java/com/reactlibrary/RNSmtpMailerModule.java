@@ -9,7 +9,8 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
 
-import java.util.Properties; 
+import java.util.Properties;
+import java.util.Date;
 import android.os.AsyncTask;
 
 import javax.activation.DataHandler;   
