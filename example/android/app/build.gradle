@@ -141,6 +141,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-smtp-mailer')
+    compile project(':react-native-fs')
     implementation project(':react-native-fs')
     implementation project(':react-native-smtp-mailer')
     implementation fileTree(dir: "libs", include: ["*.jar"])

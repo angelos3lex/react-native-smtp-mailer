@@ -44,5 +44,6 @@ buck-out/
 \.buckd/
 *.keystore
 
-example/ios/Pods/*      
+example/ios/Pods/*
+example/package-lock.json  
 notes_for_library_creation.txt

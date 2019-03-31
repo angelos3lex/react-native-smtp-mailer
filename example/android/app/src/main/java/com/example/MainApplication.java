@@ -3,6 +3,8 @@ package com.example;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.RNSmtpMailerPackage;
+import com.rnfs.RNFSPackage;
 import com.rnfs.RNFSPackage;
 import com.reactlibrary.RNSmtpMailerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSmtpMailerPackage(),
+            new RNFSPackage(),
             new RNFSPackage(),
             new RNSmtpMailerPackage()
       );
