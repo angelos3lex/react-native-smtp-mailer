@@ -19,7 +19,7 @@
 
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
+1. Open up `android/app/src/main/java/[...]/MainApplication.java`
 
 - Add `import com.reactlibrary.RNSmtpMailerPackage;` to the imports at the top of the file
 - Add `new RNSmtpMailerPackage()` to the list returned by the `getPackages()` method
@@ -34,6 +34,9 @@
      implementation project(':react-native-smtp-mailer')
    ```
 
+## Extra steps
+
+### Android
 Maybe you need to add (if you encounter error with mimetypes during build), in <b><i>android/app/build.gradle:</i></b>
 
 ```
@@ -46,6 +49,7 @@ android {
 }
 ```
 
+### Ios
 For iOS, inside ios folder, create a Podfile with `pod init` and add (or just add it on your existing Podfile):
 
 ```
@@ -102,3 +106,17 @@ RNSmtpMailer.sendMail({
 ```
 
 RNFS is from <a href="https://github.com/itinance/react-native-fs">react-native-fs</a> library, used just to demonstrate a way of accessing files in phone filesystem.
+
+### Usage with Proguard
+Add the following into android/app/proguard-rules.pro
+```
+-dontshrink 
+-keep class javax.** {*;} 
+-keep class com.sun.** {*;} 
+-keep class myjava.** {*;} 
+-keep class org.apache.harmony.** {*;} 
+-dontwarn java.awt.** 
+-dontwarn java.beans.Beans 
+-dontwarn javax.security.** 
+-dontwarn javax.activation.** 
+```
