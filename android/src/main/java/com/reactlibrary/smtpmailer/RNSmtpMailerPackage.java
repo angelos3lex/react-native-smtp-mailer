@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.reactlibrary.smtpmailer;
 
 import java.util.Arrays;
 import java.util.Collections;
