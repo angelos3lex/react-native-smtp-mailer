@@ -68,7 +68,10 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
           try {
               MailSender sender = new MailSender(username, password, mailhost, port, ssl);
               sender.sendMail(subject, body, from, recipients, attachmentPaths, attachmentNames, attachmentTypes);
-              promise.resolve("Mail Send Successfully");
+              
+              WritableMap success = new WritableNativeMap();
+              success.putString("status", "SUCCESS");
+              promise.resolve(success);
             } catch (Exception e) {
               promise.reject(e.getMessage());
             }
