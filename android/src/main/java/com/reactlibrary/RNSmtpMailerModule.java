@@ -17,7 +17,7 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource; 
 import javax.activation.FileDataSource;
 
-import javax.mail.Message;   
+import javax.mail.Message;
 import javax.mail.PasswordAuthentication;   
 import javax.mail.Session;   
 import javax.mail.Transport;   
@@ -57,6 +57,7 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
         String password = obj.getString("password");
         String from = obj.getString("from");
         String recipients = obj.getString("recipients");
+        ReadableArray bcc = obj.hasKey("bcc") ? obj.getArray("bcc") : null;
         String subject = obj.getString("subject");
         String body = obj.getString("htmlBody");
         ReadableArray attachmentPaths = obj.getArray("attachmentPaths");
@@ -67,7 +68,7 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
         public void run() {
           try {
               MailSender sender = new MailSender(username, password, mailhost, port, ssl);
-              sender.sendMail(subject, body, from, recipients, attachmentPaths, attachmentNames, attachmentTypes);
+              sender.sendMail(subject, body, from, recipients, bcc, attachmentPaths, attachmentNames, attachmentTypes);
               promise.resolve("Mail Send Successfully");
             } catch (Exception e) {
               promise.reject(e.getMessage());
@@ -116,7 +117,7 @@ class MailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);   
     }   
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients,
+    public synchronized void sendMail(String subject, String body, String sender, String recipients, ReadableArray bcc,
     ReadableArray attachmentPaths, ReadableArray attachmentNames, ReadableArray attachmentTypes) throws Exception {   
         MimeMessage message = new MimeMessage(session);
         Transport transport = session.getTransport();
@@ -133,7 +134,13 @@ class MailSender extends javax.mail.Authenticator {
         if (recipients.indexOf(',') > 0)   
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));   
         else  
-            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));   
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
+
+        if(bcc != null) {
+            for(int i = 0; i < bcc.size(); i++) {
+                message.addRecipients(Message.RecipientType.BCC, bcc.getString(i));
+            }
+        }
 
         for(int i=0;i<attachmentPaths.size();i++){
             messageBodyPart = new MimeBodyPart();
