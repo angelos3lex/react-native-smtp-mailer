@@ -35,8 +35,8 @@ RCT_EXPORT_METHOD(sendMail:(NSDictionary *)obj resolver:(RCTPromiseResolveBlock)
     smtpSession.authType = MCOAuthTypeSASLPlain;
     smtpSession.connectionType = MCOConnectionTypeTLS;
     MCOMessageBuilder *builder = [[MCOMessageBuilder alloc] init];
-    MCOAddress *from = [MCOAddress addressWithDisplayName:nil
-                                                mailbox:fromEmail];
+    MCOAddress *from = [MCOAddress addressWithDisplayName:fromEmail
+                                                mailbox:username];
     MCOAddress *to = [MCOAddress addressWithDisplayName:nil
                                               mailbox:recipients];
 
