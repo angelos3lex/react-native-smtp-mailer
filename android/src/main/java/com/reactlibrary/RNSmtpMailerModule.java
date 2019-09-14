@@ -8,6 +8,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.WritableNativeMap;
 
 import java.util.Properties;
 import java.util.Date;
@@ -68,7 +70,10 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
           try {
               MailSender sender = new MailSender(username, password, mailhost, port, ssl);
               sender.sendMail(subject, body, from, recipients, attachmentPaths, attachmentNames, attachmentTypes);
-              promise.resolve("Mail Send Successfully");
+              
+              WritableMap success = new WritableNativeMap();
+              success.putString("status", "SUCCESS");
+              promise.resolve(success);
             } catch (Exception e) {
               promise.reject(e.getMessage());
             }
