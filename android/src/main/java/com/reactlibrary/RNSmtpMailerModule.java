@@ -71,7 +71,7 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
             public void run() {
                 try {
                     MailSender sender = new MailSender(username, password, mailhost, port, ssl);
-                    sender.sendMail(subject, body, from, recipients, bcc, attachmentPaths, attachmentNames, attachmentTypes);
+                    sender.sendMail(subject, body, username, from, recipients, bcc, attachmentPaths, attachmentNames, attachmentTypes);
 
                     WritableMap success = new WritableNativeMap();
                     success.putString("status", "SUCCESS");
@@ -124,13 +124,18 @@ class MailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients, ReadableArray bcc,
+    public synchronized void sendMail(String subject, String body, String sender, String senderAlias, String recipients, ReadableArray bcc,
           ReadableArray attachmentPaths, ReadableArray attachmentNames, ReadableArray attachmentTypes) throws Exception {
         MimeMessage message = new MimeMessage(session);
         Transport transport = session.getTransport();
         BodyPart messageBodyPart = new MimeBodyPart();
 
-        message.setFrom(new InternetAddress(sender, ""));
+        // Try to set custom 'from' alias
+        if(senderAlias != null && !senderAlias.isEmpty())
+            message.setFrom(new InternetAddress(sender, senderAlias));
+        else
+            message.setFrom(new InternetAddress(sender, ""));
+
         message.setSubject(subject);
         message.setSentDate(new Date());
 
