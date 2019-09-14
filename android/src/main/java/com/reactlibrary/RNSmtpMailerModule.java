@@ -18,8 +18,14 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
+
 import javax.mail.Message;
+import javax.mail.PasswordAuthentication;   
+import javax.mail.Session;   
+import javax.mail.Transport;   
+import javax.mail.internet.InternetAddress;   
+import javax.mail.internet.MimeMessage;
+import javax.mail.BodyPart;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -47,24 +53,25 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
     public void sendMail(final ReadableMap obj, final Promise promise) {
         AsyncTask.execute(new Runnable() {
 
-            String mailhost = obj.getString("mailhost");
-            String port = obj.getString("port");
-            Boolean ssl = obj.getBoolean("ssl");
-            String username = obj.getString("username");
-            String password = obj.getString("password");
-            String from = obj.getString("from");
-            String recipients = obj.getString("recipients");
-            String subject = obj.getString("subject");
-            String body = obj.getString("htmlBody");
-            ReadableArray attachmentPaths = obj.getArray("attachmentPaths");
-            ReadableArray attachmentNames = obj.getArray("attachmentNames");
-            ReadableArray attachmentTypes = obj.getArray("attachmentTypes");
+        String mailhost = obj.getString("mailhost");
+        String port = obj.getString("port");
+        Boolean ssl = obj.getBoolean("ssl");
+        String username = obj.getString("username");
+        String password = obj.getString("password");
+        String from = obj.getString("from");
+        String recipients = obj.getString("recipients");
+        ReadableArray bcc = obj.hasKey("bcc") ? obj.getArray("bcc") : null;
+        String subject = obj.getString("subject");
+        String body = obj.getString("htmlBody");
+        ReadableArray attachmentPaths = obj.getArray("attachmentPaths");
+        ReadableArray attachmentNames = obj.getArray("attachmentNames");
+        ReadableArray attachmentTypes = obj.getArray("attachmentTypes");
 
             @Override
             public void run() {
                 try {
                     MailSender sender = new MailSender(username, password, mailhost, port, ssl);
-                    sender.sendMail(subject, body, from, recipients, attachmentPaths, attachmentNames, attachmentTypes);
+                    sender.sendMail(subject, body, from, recipients, bcc, attachmentPaths, attachmentNames, attachmentTypes);
 
                     WritableMap success = new WritableNativeMap();
                     success.putString("status", "SUCCESS");
@@ -117,7 +124,7 @@ class MailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients,
+    public synchronized void sendMail(String subject, String body, String sender, String recipients, ReadableArray bcc,
           ReadableArray attachmentPaths, ReadableArray attachmentNames, ReadableArray attachmentTypes) throws Exception {
         MimeMessage message = new MimeMessage(session);
         Transport transport = session.getTransport();
@@ -135,6 +142,12 @@ class MailSender extends javax.mail.Authenticator {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
         } else {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
+        }
+
+        if(bcc != null) {
+            for(int i = 0; i < bcc.size(); i++) {
+                message.addRecipients(Message.RecipientType.BCC, bcc.getString(i));
+            }
         }
 
         for (int i = 0; i < attachmentPaths.size(); i++) {
