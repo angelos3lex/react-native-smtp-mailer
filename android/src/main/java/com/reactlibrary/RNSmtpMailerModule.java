@@ -20,10 +20,10 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
 import javax.mail.Message;
-import javax.mail.PasswordAuthentication;   
-import javax.mail.Session;   
-import javax.mail.Transport;   
-import javax.mail.internet.InternetAddress;   
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.BodyPart;
 import javax.mail.Multipart;
@@ -53,19 +53,19 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
     public void sendMail(final ReadableMap obj, final Promise promise) {
         AsyncTask.execute(new Runnable() {
 
-        String mailhost = obj.getString("mailhost");
-        String port = obj.getString("port");
-        Boolean ssl = obj.getBoolean("ssl");
-        String username = obj.getString("username");
-        String password = obj.getString("password");
-        String from = obj.getString("from");
-        String recipients = obj.getString("recipients");
-        ReadableArray bcc = obj.hasKey("bcc") ? obj.getArray("bcc") : null;
-        String subject = obj.getString("subject");
-        String body = obj.getString("htmlBody");
-        ReadableArray attachmentPaths = obj.getArray("attachmentPaths");
-        ReadableArray attachmentNames = obj.getArray("attachmentNames");
-        ReadableArray attachmentTypes = obj.getArray("attachmentTypes");
+            String mailhost = obj.getString("mailhost");
+            String port = obj.getString("port");
+            Boolean ssl = obj.getBoolean("ssl");
+            String username = obj.getString("username");
+            String password = obj.getString("password");
+            String from = obj.getString("from");
+            String recipients = obj.getString("recipients");
+            ReadableArray bcc = obj.hasKey("bcc") ? obj.getArray("bcc") : null;
+            String subject = obj.getString("subject");
+            String body = obj.getString("htmlBody");
+            ReadableArray attachmentPaths = obj.getArray("attachmentPaths");
+            ReadableArray attachmentNames = obj.getArray("attachmentNames");
+            ReadableArray attachmentTypes = obj.getArray("attachmentTypes");
 
             @Override
             public void run() {
@@ -144,8 +144,8 @@ class MailSender extends javax.mail.Authenticator {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
         }
 
-        if(bcc != null) {
-            for(int i = 0; i < bcc.size(); i++) {
+        if (bcc != null) {
+            for (int i = 0; i < bcc.size(); i++) {
                 message.addRecipients(Message.RecipientType.BCC, bcc.getString(i));
             }
         }

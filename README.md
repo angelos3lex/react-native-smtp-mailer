@@ -37,6 +37,7 @@
 ## Extra steps
 
 ### Android
+
 Maybe you need to add (if you encounter error with mimetypes during build), in <b><i>android/app/build.gradle:</i></b>
 
 ```
@@ -50,6 +51,7 @@ android {
 ```
 
 ### Ios
+
 For iOS, inside ios folder, create a Podfile with `pod init` and add (or just add it on your existing Podfile):
 
 ```
@@ -81,6 +83,7 @@ RNSmtpMailer.sendMail({
   password: "password",
   from: "fromEmail",
   recipients: "toEmail1,toEmail2",
+  bcc: ["bccEmail1", "bccEmail2"], //completely optional
   subject: "subject",
   htmlBody: "<h1>header</h1><p>body</p>",
   attachmentPaths: [
@@ -108,15 +111,17 @@ RNSmtpMailer.sendMail({
 RNFS is from <a href="https://github.com/itinance/react-native-fs">react-native-fs</a> library, used just to demonstrate a way of accessing files in phone filesystem.
 
 ### Usage with Proguard
+
 Add the following into android/app/proguard-rules.pro
+
 ```
--dontshrink 
--keep class javax.** {*;} 
--keep class com.sun.** {*;} 
--keep class myjava.** {*;} 
--keep class org.apache.harmony.** {*;} 
--dontwarn java.awt.** 
--dontwarn java.beans.Beans 
--dontwarn javax.security.** 
--dontwarn javax.activation.** 
+-dontshrink
+-keep class javax.** {*;}
+-keep class com.sun.** {*;}
+-keep class myjava.** {*;}
+-keep class org.apache.harmony.** {*;}
+-dontwarn java.awt.**
+-dontwarn java.beans.Beans
+-dontwarn javax.security.**
+-dontwarn javax.activation.**
 ```
