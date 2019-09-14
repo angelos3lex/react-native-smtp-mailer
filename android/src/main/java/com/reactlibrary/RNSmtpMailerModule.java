@@ -70,7 +70,7 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
                     success.putString("status", "SUCCESS");
                     promise.resolve(success);
                 } catch (Exception e) {
-                    promise.reject(e.getCause());
+                    promise.reject("ERROR", e.getMessage());
                 }
             }
         });
