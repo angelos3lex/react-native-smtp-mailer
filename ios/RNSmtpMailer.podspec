@@ -12,11 +12,11 @@ Pod::Spec.new do |s|
   s.author             = { "author" => "angelos3lex" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/angelos3lex/react-native-smtp-mailer.git", :tag => "master" }
-  s.source_files  = "RNSmtpMailer/**/*.{h,m}"
+  s.source_files  = "*.{h,m}"
   s.requires_arc = true
 
 
   s.dependency "React"
-  #s.dependency "others"
+  s.dependency "mailcore2-ios"
 
 end
