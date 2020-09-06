@@ -1,7 +1,7 @@
 
 #import "RNSmtpMailer.h"
 #import <React/RCTConvert.h>
-#import <Mailcore/Mailcore.h>
+#import <MailCore/MailCore.h>
 @implementation RNSmtpMailer
 
 - (dispatch_queue_t)methodQueue
