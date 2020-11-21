@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.rnsmtpmailer;
 
 import android.os.AsyncTask;
 import com.facebook.react.bridge.Promise;
@@ -18,7 +18,6 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -55,23 +54,24 @@ public class RNSmtpMailerModule extends ReactContextBaseJavaModule {
 
             String mailhost = obj.getString("mailhost");
             String port = obj.getString("port");
-            Boolean ssl = obj.getBoolean("ssl");
             String username = obj.getString("username");
             String password = obj.getString("password");
-            String from = obj.getString("from");
             String recipients = obj.getString("recipients");
-            ReadableArray bcc = obj.hasKey("bcc") ? obj.getArray("bcc") : null;
             String subject = obj.getString("subject");
             String body = obj.getString("htmlBody");
-            ReadableArray attachmentPaths = obj.getArray("attachmentPaths");
-            ReadableArray attachmentNames = obj.getArray("attachmentNames");
-            ReadableArray attachmentTypes = obj.getArray("attachmentTypes");
+
+            String fromName = obj.hasKey("fromName") ? obj.getString("fromName") : username;
+            String replyToAddress = obj.hasKey("replyTo") ? obj.getString("replyTo") : username;
+            ReadableArray bcc = obj.hasKey("bcc") ? obj.getArray("bcc") : null;
+            Boolean ssl = obj.hasKey("ssl") ? obj.getBoolean("ssl") : true;
+            ReadableArray attachmentPaths = obj.hasKey("attachmentPaths") ? obj.getArray("attachmentPaths") : null;
+            ReadableArray attachmentNames = obj.hasKey("attachmentNames") ? obj.getArray("attachmentNames") : null;
 
             @Override
             public void run() {
                 try {
                     MailSender sender = new MailSender(username, password, mailhost, port, ssl);
-                    sender.sendMail(subject, body, from, recipients, bcc, attachmentPaths, attachmentNames, attachmentTypes);
+                    sender.sendMail(subject, body, username, fromName, replyToAddress, recipients, bcc, attachmentPaths, attachmentNames);
 
                     WritableMap success = new WritableNativeMap();
                     success.putString("status", "SUCCESS");
@@ -124,13 +124,19 @@ class MailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients, ReadableArray bcc,
-          ReadableArray attachmentPaths, ReadableArray attachmentNames, ReadableArray attachmentTypes) throws Exception {
+    public synchronized void sendMail(String subject, String body, String sender, String senderAlias, String replyToAddress, String recipients, ReadableArray bcc,
+          ReadableArray attachmentPaths, ReadableArray attachmentNames) throws Exception {
         MimeMessage message = new MimeMessage(session);
         Transport transport = session.getTransport();
         BodyPart messageBodyPart = new MimeBodyPart();
 
-        message.setFrom(new InternetAddress(sender, ""));
+        if (!sender.equals(senderAlias)) {
+            message.setFrom(new InternetAddress(sender, senderAlias));
+        } else {
+            message.setFrom(new InternetAddress(sender, ""));
+        }
+
+        message.setReplyTo(InternetAddress.parse(replyToAddress));
         message.setSubject(subject);
         message.setSentDate(new Date());
 
@@ -150,16 +156,17 @@ class MailSender extends javax.mail.Authenticator {
             }
         }
 
-        for (int i = 0; i < attachmentPaths.size(); i++) {
-            messageBodyPart = new MimeBodyPart();
-            DataSource source = new FileDataSource(attachmentPaths.getString(i));
-            messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(attachmentNames.getString(i));
-            if (attachmentTypes.getString(i) == "img") {
-                messageBodyPart.setHeader("Content-ID", "<image>");
+        if (attachmentPaths != null && attachmentPaths.size() > 0) {
+            for (int i = 0; i < attachmentPaths.size(); i++) {
+                messageBodyPart = new MimeBodyPart();
+                DataSource source = new FileDataSource(attachmentPaths.getString(i));
+                messageBodyPart.setDataHandler(new DataHandler(source));
+                if (attachmentNames != null && attachmentNames.size() > i) {
+                    messageBodyPart.setFileName(attachmentNames.getString(i));
+                }
+                messageBodyPart.setHeader("Content-ID", "<content_id_" + String.valueOf(i) + ">");
+                _multipart.addBodyPart(messageBodyPart);
             }
-            _multipart.addBodyPart(messageBodyPart);
-            messageBodyPart = new MimeBodyPart();
         }
 
         message.setContent(_multipart);
