@@ -21,6 +21,17 @@
 3. In XCode, in the project navigator, select your project. Add `libRNSmtpMailer.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)<
 
+Inside ios folder, if Podfile doesn't exist, create a Podfile with `pod init`.
+And add the following inside your Podfile:
+```
+pod 'mailcore2-ios'
+```
+
+Then run:
+
+```
+pod install
+```
 ##### Android
 
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
@@ -37,7 +48,6 @@
    ```
      implementation project(':react-native-smtp-mailer')
    ```
-
 </details>
 
 ## Extra steps
@@ -52,20 +62,6 @@ android {
 		exclude 'META-INF/mailcap.default'
 	}
 }
-```
-
-### Ios
-
-For iOS, inside ios folder, create a Podfile with `pod init` and add (or just add it on your existing Podfile):
-
-```
-pod 'mailcore2-ios'
-```
-
-Then run:
-
-```
-pod install
 ```
 
 ## Usage
