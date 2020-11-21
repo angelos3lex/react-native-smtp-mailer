@@ -16,14 +16,14 @@ RCT_EXPORT_METHOD(sendMail:(NSDictionary *)obj resolver:(RCTPromiseResolveBlock)
     NSString *port = [RCTConvert NSString:obj[@"port"]];
     NSString *username = [RCTConvert NSString:obj[@"username"]];
     NSString *password = [RCTConvert NSString:obj[@"password"]];
-    NSString *fromEmail = [RCTConvert NSString:obj[@"from"]];
+    NSString *fromName = [RCTConvert NSString:obj[@"fromName"]];
+    NSString *replyToAddress = [RCTConvert NSString:obj[@"replyTo"]];
     NSString *recipients = [RCTConvert NSString:obj[@"recipients"]];
     NSArray *bcc = [RCTConvert NSArray:obj[@"bcc"]];
     NSString *subject = [RCTConvert NSString:obj[@"subject"]];
     NSString *body = [RCTConvert NSString:obj[@"htmlBody"]];
     NSArray *attachmentPaths = [RCTConvert NSArray:obj[@"attachmentPaths"]];
-    NSArray *attachmentNames = [RCTConvert NSArray:obj[@"attachmentNames"]];
-    NSArray *attachmentTypes = [RCTConvert NSArray:obj[@"attachmentTypes"]];
+    
     NSNumber *portNumber = [NSNumber numberWithLongLong:port.longLongValue];
     NSUInteger portInteger = portNumber.unsignedIntegerValue;
     
@@ -35,10 +35,14 @@ RCT_EXPORT_METHOD(sendMail:(NSDictionary *)obj resolver:(RCTPromiseResolveBlock)
     smtpSession.authType = MCOAuthTypeSASLPlain;
     smtpSession.connectionType = MCOConnectionTypeTLS;
     MCOMessageBuilder *builder = [[MCOMessageBuilder alloc] init];
-    MCOAddress *from = [MCOAddress addressWithDisplayName:nil
-                                                mailbox:fromEmail];
+    MCOAddress *from = [MCOAddress addressWithDisplayName:fromName
+                                                mailbox:username];
+                                                
     MCOAddress *to = [MCOAddress addressWithDisplayName:nil
                                               mailbox:recipients];
+
+    MCOAddress *replyTo = [MCOAddress addressWithDisplayName:nil
+                                            mailbox:replyToAddress];
 
     NSMutableArray *bccs = [[NSMutableArray alloc] init];
     int bccCount = [bcc count];
@@ -50,6 +54,7 @@ RCT_EXPORT_METHOD(sendMail:(NSDictionary *)obj resolver:(RCTPromiseResolveBlock)
     [[builder header] setFrom:from];
     [[builder header] setTo:@[to]];
     [[builder header] setBcc:bccs];
+    [[builder header] setReplyTo:@[replyTo]];
 
     [[builder header] setSubject:subject];
     [builder setHTMLBody:body];

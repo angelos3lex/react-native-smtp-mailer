@@ -43,12 +43,18 @@ export interface SmtpOptions {
     htmlBody: string;
 
     /**
-     * Alias of the username email address, to be shown in the recipients as the sender's email address.
+     * Alias of the username email address, to be shown in the recipients as the sender's name.
      * By default it's the same as the username field
      * i.e: "foo.alias@foobar.com"
-     * *Note:* If set, then the reply-to email address will be this one, and not the username email address
+     * *Note:* This is different than the reply-to email address. If reply-to is not specified, the reply-to will still use the username email
      */
-    from?: string;
+    fromName?: string;
+
+    /**
+     * If not specified, the reply-to email is the username one
+     * i.e: "fooReply@foobar.com"
+     */
+    replyTo?: string;
 
     /**
      * In iOS TLS/SSL is determined automatically, so either true or false, it doesn't affect it
@@ -70,9 +76,9 @@ export interface SmtpOptions {
     attachmentPaths?: Array<string>;
 
     /**
-     * **Only for android**
-     * If provided, the sending attachments filenames, will be renamed by these
-     * i.e: ["renamed_sample_test.txt"]
+     * **Required if attachmentPaths are set, Only for android**
+     * The sending attachments filenames, will be renamed by these. It's important to set these, otherwise they are not always shown in the received email
+     * i.e: ["renamed_sample_test.txt"] or ["sample_test.txt"] etc
      */
     attachmentNames?: Array<string>;
 }
