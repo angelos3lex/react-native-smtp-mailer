@@ -17,12 +17,5 @@
   "license": "MIT",
   "peerDependencies": {
     "react-native": "*"
-  },
-  "devDependencies": {
-    "@types/jest": "*",
-    "@types/react": "*",
-    "@types/react-native": "*",
-    "@types/react-test-renderer": "*",
-    "typescript": "*"
   }
 }
