@@ -1,45 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
-import React, { Component } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import RNSmtpMailer from "react-native-smtp-mailer";
+
+import React from "react";
+import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import RNSmtpMailer from "react-native-mailtest";
 import RNFS from "react-native-fs";
 
-export default class App extends Component {
-  sendEmail = () => {
+
+const App =()=>{
+  const titleButton = "mail-gönder"
+  const sendEmail = () => {
     RNSmtpMailer.sendMail({
-      mailhost: "smtp.gmail.com",
-      port: "465",
-      ssl: true, //if ssl: false, TLS is enabled,**note:** in iOS TLS/SSL is determined automatically, so either true or false is the same
-      username: "username",
-      password: "password",
-      from: "fromEmail",
-      recipients: "toEmail1,toEmail2",
+      mailhost: "smtp.office365.com",
+      port: "587",
+      ssl: false, //if ssl: false, TLS is enabled,**note:** in iOS TLS/SSL is determined automatically, so either true or false is the same
+      username: "slymanmrcan@gmail.com",
+      password: "1995.Mercan",
+      recipients: "valogemesup@gmail.com",
       subject: "subject",
       htmlBody: "<h1>header</h1><p>body</p>",
       attachmentPaths: ["pathToFile1.png","pathToFile2.txt","pathToFile3.csv"],
       attachmentNames: ["image.jpg", "firstFile.txt", "secondFile.csv"],//only used in android, these are renames of original files. in ios filenames will be same as specified in path. In ios-only application, leave it empty: attachmentNames:[] 
-      attachmentTypes: ["img", "txt", "csv"]//needed for android, in ios-only application, leave it empty: attachmentTypes:[]
     })
-      .then(success => alert(success))
-      .catch(err => alert(err));
+      .then(success => console.log("başarılı",success))
+      .catch(err => console.log("bir sorun oluştu",err));
+      
   };
-
-  render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to Smtp Mailer!</Text>
-        <Button title="Send Email" onPress={this.sendEmail} />
+        <Button title={titleButton} onPress={sendEmail} />
       </View>
     );
   }
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -59,3 +51,5 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
+
+export default App
